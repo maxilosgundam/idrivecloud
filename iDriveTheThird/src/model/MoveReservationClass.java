@@ -57,12 +57,21 @@ public class MoveReservationClass {
 			Date resDate =  dateFormat.parse(date);
 			java.sql.Date sqlDate = new java.sql.Date(resDate.getTime());
 			
-			String query = "UPDATE reservations SET tripDate = ?, departure = ?, statusID = ? WHERE reservationID = ?";
+//			This code updates the reservations to the "move" date/time instantly
+//			String query = "UPDATE reservations SET tripDate = ?, departure = ?, statusID = ? WHERE reservationID = ?";
+//			PreparedStatement pstmt = connection.prepareStatement(query);
+//			pstmt.setDate(1, sqlDate);
+//			pstmt.setString(2, hours + " " + minutes + " " + time);
+//			pstmt.setInt(3, 6);
+//			pstmt.setInt(4, Integer.parseInt(resID));
+//			pstmt.executeUpdate();
+			
+			String query = "INSERT INTO moveRequest (moveResID, moveDate, moveTime, moveStatus) values (?,?,?,?)";
 			PreparedStatement pstmt = connection.prepareStatement(query);
-			pstmt.setDate(1, sqlDate);
-			pstmt.setString(2, hours + " " + minutes + " " + time);
-			pstmt.setInt(3, 6);
-			pstmt.setInt(4, Integer.parseInt(resID));
+			pstmt.setInt(1, Integer.parseInt(resID));
+			pstmt.setDate(2, sqlDate);
+			pstmt.setString(3, hours + " " + minutes + " " + time);
+			pstmt.setInt(4, 1);
 			pstmt.executeUpdate();
 			
 			return true;
